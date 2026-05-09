@@ -1,0 +1,741 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>رسالة حب 💌</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;800&family=Amiri:ital,wght@0,400;0,700;1,400&display=swap');
+
+    :root {
+      --primary: #ff4d8d;
+      --primary-light: #ff85b3;
+      --secondary: #ffccd5;
+      --bg-gradient: linear-gradient(135deg, #fff5f7 0%, #ffe4e9 50%, #f3e5f5 100%);
+      --card-bg: rgba(255, 255, 255, 0.75);
+      --text-main: #4a1c2c;
+      --text-soft: #8a5e6d;
+      --shadow: 0 10px 30px rgba(255, 77, 141, 0.1);
+      --glass-border: rgba(255, 255, 255, 0.4);
+    }
+
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --primary: #ff5e9e;
+        --primary-light: #ff99c2;
+        --secondary: #4a1528;
+        --bg-gradient: linear-gradient(135deg, #1a0a10 0%, #2d0a1a 50%, #1a0a2e 100%);
+        --card-bg: rgba(42, 21, 32, 0.7);
+        --text-main: #fce4ec;
+        --text-soft: #f8bbd0;
+        --shadow: 0 10px 40px rgba(0, 0, 0, 0.4);
+        --glass-border: rgba(255, 255, 255, 0.1);
+      }
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      overflow-x: hidden;
+      background: var(--bg-gradient);
+      min-height: 100vh;
+      margin: 0;
+    }
+
+    .love-app {
+      font-family: 'Tajawal', sans-serif;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 40px 20px;
+      position: relative;
+      overflow: hidden;
+      direction: rtl;
+    }
+
+    /* Background animated blobs */
+    .love-app::before,
+    .love-app::after {
+      content: '';
+      position: absolute;
+      width: 300px;
+      height: 300px;
+      border-radius: 50%;
+      background: var(--primary);
+      filter: blur(80px);
+      opacity: 0.1;
+      z-index: 0;
+      animation: blobMove 20s infinite alternate;
+    }
+
+    .love-app::before {
+      top: -100px;
+      left: -100px;
+    }
+
+    .love-app::after {
+      bottom: -100px;
+      right: -100px;
+      animation-delay: -10s;
+    }
+
+    @keyframes blobMove {
+      from {
+        transform: translate(0, 0) scale(1);
+      }
+
+      to {
+        transform: translate(100px, 100px) scale(1.2);
+      }
+    }
+
+    .hearts-layer {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      overflow: hidden;
+      z-index: 1;
+    }
+
+    .fh {
+      position: absolute;
+      animation: fhUp linear infinite;
+      opacity: 0.2;
+      filter: drop-shadow(0 0 5px rgba(255, 255, 255, 0.5));
+    }
+
+    @keyframes fhUp {
+      0% {
+        transform: translateY(110vh) rotate(0deg) scale(1);
+        opacity: 0;
+      }
+
+      10% {
+        opacity: 0.3;
+      }
+
+      90% {
+        opacity: 0.3;
+      }
+
+      100% {
+        transform: translateY(-10vh) rotate(360deg) scale(1.5);
+        opacity: 0;
+      }
+    }
+
+    .screen {
+      display: none;
+      flex-direction: column;
+      align-items: center;
+      width: 100%;
+      max-width: 480px;
+      z-index: 2;
+      animation: fadeIn 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .screen.active {
+      display: flex;
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .card {
+      background: var(--card-bg);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border: 1px solid var(--glass-border);
+      border-radius: 32px;
+      padding: 40px 32px;
+      width: 100%;
+      box-shadow: var(--shadow);
+      text-align: center;
+      color: var(--text-main);
+      transition: all 0.3s ease;
+    }
+
+    .dots {
+      display: flex;
+      gap: 10px;
+      justify-content: center;
+      margin-bottom: 30px;
+    }
+
+    .dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: var(--secondary);
+      transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    }
+
+    .dot.done {
+      background: var(--primary-light);
+    }
+
+    .dot.active {
+      background: var(--primary);
+      transform: scale(1.4);
+      box-shadow: 0 0 10px rgba(255, 77, 141, 0.4);
+    }
+
+    .q-icon {
+      font-size: 64px;
+      margin-bottom: 20px;
+      display: block;
+      animation: pulse 2.5s ease-in-out infinite;
+    }
+
+    @keyframes pulse {
+
+      0%,
+      100% {
+        transform: scale(1);
+      }
+
+      50% {
+        transform: scale(1.1);
+      }
+    }
+
+    .title {
+      font-family: 'Amiri', serif;
+      font-size: 32px;
+      color: var(--primary);
+      line-height: 1.4;
+      margin-bottom: 12px;
+      font-weight: 700;
+    }
+
+    .subtitle {
+      font-size: 17px;
+      color: var(--text-soft);
+      line-height: 1.8;
+      margin-bottom: 32px;
+    }
+
+    .q-text {
+      font-size: 22px;
+      font-weight: 700;
+      color: var(--text-main);
+      line-height: 1.6;
+      margin-bottom: 32px;
+    }
+
+    .btns {
+      display: flex;
+      flex-direction: row;
+      gap: 16px;
+      justify-content: center;
+      align-items: center;
+      width: 100%;
+      min-height: 56px;
+      position: relative;
+    }
+
+    .btn-yes {
+      background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);
+      color: #fff;
+      border: none;
+      border-radius: 50px;
+      padding: 14px 24px;
+      font-size: 18px;
+      font-family: 'Tajawal', sans-serif;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      box-shadow: 0 6px 20px rgba(255, 77, 141, 0.3);
+      flex: 1;
+    }
+
+    .btn-yes:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 10px 25px rgba(255, 77, 141, 0.4);
+    }
+
+    .btn-yes:active {
+      transform: scale(0.95);
+    }
+
+    .btn-no {
+      background: transparent;
+      color: var(--primary);
+      border: 2px solid var(--primary);
+      border-radius: 50px;
+      padding: 12px 24px;
+      font-size: 18px;
+      font-family: 'Tajawal', sans-serif;
+      font-weight: 700;
+      cursor: pointer;
+      flex: 1;
+      position: relative;
+      transition: all 0.2s ease;
+      white-space: nowrap;
+    }
+
+    .btn-no:hover {
+      background: rgba(255, 77, 141, 0.05);
+    }
+
+    .btns-box {
+      position: relative;
+      width: 100%;
+      height: 56px;
+    }
+
+    .btns-box .btn-yes {
+      position: absolute;
+      right: 0;
+      top: 0;
+      width: calc(50% - 8px);
+    }
+
+    .btns-box .btn-no {
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: calc(50% - 8px);
+    }
+
+    .toast {
+      position: absolute;
+      bottom: calc(100% + 12px);
+      left: 50%;
+      transform: translateX(-50%);
+      background: var(--primary);
+      color: #fff;
+      padding: 10px 20px;
+      border-radius: 20px;
+      font-size: 14px;
+      white-space: nowrap;
+      pointer-events: none;
+      z-index: 99;
+      font-family: 'Tajawal', sans-serif;
+      box-shadow: 0 4px 12px rgba(255, 77, 141, 0.2);
+      animation: toastIn 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    }
+
+    @keyframes toastIn {
+      from {
+        opacity: 0;
+        bottom: calc(100% + 0px);
+        transform: translateX(-50%) scale(0.8);
+      }
+
+      to {
+        opacity: 1;
+        bottom: calc(100% + 12px);
+        transform: translateX(-50%) scale(1);
+      }
+    }
+
+    .burst-wrap {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      pointer-events: none;
+      z-index: 99;
+    }
+
+    .bh {
+      position: absolute;
+      font-size: 24px;
+      animation: bOut 1s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    }
+
+    @keyframes bOut {
+      0% {
+        transform: translate(0, 0) scale(0);
+        opacity: 1;
+      }
+
+      100% {
+        transform: translate(var(--dx), var(--dy)) scale(1.5);
+        opacity: 0;
+      }
+    }
+
+    .final-bears {
+      display: flex;
+      align-items: flex-end;
+      justify-content: center;
+      gap: 8px;
+      margin-bottom: 24px;
+      animation: bearsClose 1.5s cubic-bezier(0.16, 1, 0.3, 1) 0.5s both;
+    }
+
+    @keyframes bearsClose {
+      from {
+        gap: 100px;
+      }
+
+      to {
+        gap: 8px;
+      }
+    }
+
+    .bear-label {
+      font-size: 12px;
+      color: var(--primary);
+      font-weight: 700;
+      margin-top: 6px;
+    }
+
+    .poem-box {
+      border-radius: 24px;
+      padding: 24px 28px;
+      margin: 16px 0;
+      border-right: 5px solid var(--primary);
+      font-family: 'Amiri', serif;
+      font-size: 20px;
+      line-height: 2.2;
+      text-align: right;
+      background: rgba(255, 77, 141, 0.05);
+      color: var(--text-main);
+      box-shadow: inset 0 2px 10px rgba(255, 77, 141, 0.03);
+    }
+
+    .letter-p {
+      font-size: 16px;
+      line-height: 2.2;
+      margin-bottom: 14px;
+      text-align: right;
+      color: var(--text-soft);
+    }
+
+    .closing {
+      font-family: 'Amiri', serif;
+      font-size: 24px;
+      color: var(--primary);
+      text-align: center;
+      line-height: 2;
+      margin-top: 20px;
+      font-weight: 700;
+    }
+
+    .kiss-result {
+      text-align: center;
+      margin-top: 18px;
+      color: var(--primary);
+      font-weight: 700;
+      font-size: 19px;
+      line-height: 2;
+      animation: fadeIn 0.8s ease;
+    }
+
+    .kiss-result span {
+      font-size: 14px;
+      color: var(--text-soft);
+      font-weight: 400;
+    }
+
+    .kiss-float {
+      position: absolute;
+      font-size: 40px;
+      pointer-events: none;
+      animation: kFloat 1.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+      z-index: 50;
+    }
+
+    @keyframes kFloat {
+      0% {
+        transform: scale(0) translateY(0);
+        opacity: 1;
+      }
+
+      40% {
+        transform: scale(1.5) translateY(-40px);
+        opacity: 1;
+      }
+
+      100% {
+        transform: scale(0.5) translateY(-120px);
+        opacity: 0;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="love-app" id="app">
+    <div class="hearts-layer" id="hl"></div>
+
+    <!-- S1 -->
+    <div class="screen active" id="s1">
+      <div class="card">
+        <span class="q-icon">🌸</span>
+        <h1 class="title">أهلاً يا ريمي</h1>
+        <p class="subtitle">في إشي كتير مهم حابب أحكيه إلك يا ريمي<br>هو إشي إنتي بتعرفيه.. بس أهم إشي عندي تضلي مبتسمة وإنتي بتقرأي هالكلام ❤️</p>
+        <div class="btns">
+          <button class="btn-yes" onclick="go(2)">تمام قولي 🌹</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- S2 -->
+    <div class="screen" id="s2">
+      <div class="card">
+        <div class="dots">
+          <div class="dot done"></div>
+          <div class="dot active"></div>
+          <div class="dot"></div>
+          <div class="dot"></div>
+          <div class="dot"></div>
+        </div>
+        <span class="q-icon">💭</span>
+        <p class="q-text">بتحبيني يا ريمي قوليلي الصراحة بقا 💕</p>
+        <div class="btns-box" id="bg2">
+          <button class="btn-yes" onclick="yes(3)">أيوه 💗</button>
+          <button class="btn-no" id="nb2" onclick="no(this,'bg2')">لأ 😅</button>
+          <div class="toast" id="t2" style="display:none;"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- S3 -->
+    <div class="screen" id="s3">
+      <div class="card">
+        <div class="dots">
+          <div class="dot done"></div>
+          <div class="dot done"></div>
+          <div class="dot active"></div>
+          <div class="dot"></div>
+          <div class="dot"></div>
+        </div>
+        <span class="q-icon">🌙</span>
+        <p class="q-text">بتشتاقيلي لما نغيب عن بعض 🥺</p>
+        <div class="btns-box" id="bg3">
+          <button class="btn-yes" onclick="yes(4)">أيوه والله 🥹</button>
+          <button class="btn-no" id="nb3" onclick="no(this,'bg3')">لأ مش أوي 😅</button>
+          <div class="toast" id="t3" style="display:none;"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- S4 -->
+    <div class="screen" id="s4">
+      <div class="card">
+        <div class="dots">
+          <div class="dot done"></div>
+          <div class="dot done"></div>
+          <div class="dot done"></div>
+          <div class="dot active"></div>
+          <div class="dot"></div>
+        </div>
+        <span class="q-icon">🌷</span>
+        <p class="q-text">إجيت على بالك اليوم فكرتي فيي ✨</p>
+        <div class="btns-box" id="bg4">
+          <button class="btn-yes" onclick="yes(5)">أيوه فكرت 😊</button>
+          <button class="btn-no" id="nb4" onclick="no(this,'bg4')">لأ 😅</button>
+          <div class="toast" id="t4" style="display:none;"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- S5 -->
+    <div class="screen" id="s5">
+      <div class="card">
+        <div class="dots">
+          <div class="dot done"></div>
+          <div class="dot done"></div>
+          <div class="dot done"></div>
+          <div class="dot done"></div>
+          <div class="dot active"></div>
+        </div>
+        <span class="q-icon">💌</span>
+        <p class="q-text">وعارفة إنك أغلى إشي عندي بالدنيا 💖</p>
+        <div class="btns-box" id="bg5">
+          <button class="btn-yes" onclick="yes('f')">أيوه عارفة 🌹</button>
+          <button class="btn-no" id="nb5" onclick="no(this,'bg5')">مش أوي 😅</button>
+          <div class="toast" id="t5" style="display:none;"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Final -->
+    <div class="screen" id="sf">
+      <div class="card" style="max-width:520px;padding:32px 28px;">
+        <div class="final-bears">
+          <div style="text-align:center;">
+            <div
+              style="font-family:'Amiri', serif; font-size:38px; line-height:1.2; color:#4a90e2; filter:drop-shadow(0 2px 8px rgba(0,0,0,0.05));">
+              عبدالرحمن</div>
+            <div class="bear-label" style="color:#4a90e2;">حبيبك 💙</div>
+          </div>
+          <div style="display:flex;flex-direction:column;align-items:center;gap:3px;padding-bottom:12px;">
+            <span style="font-size:20px;animation:pulse 1s infinite .1s;">💕</span>
+            <span style="font-size:14px;animation:pulse 1s infinite .4s;">💗</span>
+            <span style="font-size:18px;animation:pulse 1s infinite .2s;">💖</span>
+          </div>
+          <div style="text-align:center;">
+            <div
+              style="font-family:'Amiri', serif; font-size:38px; line-height:1.2; color:var(--primary); filter:drop-shadow(0 2px 8px rgba(0,0,0,0.05));">
+              ريم</div>
+            <div class="bear-label" style="color:var(--primary);">الجميلة ريمي 🌸</div>
+          </div>
+        </div>
+        <h1 class="title" style="margin-bottom:20px;">💌 رسالتي إليكِ 💌</h1>
+        <div class="poem-box">
+          <p>أحبكِ فوق ما يصف الكلامُ</p>
+          <p>وفوق ما في الخيالِ من الأماني</p>
+          <p>كأنكِ في دمي نبضٌ يسيرُ</p>
+          <p>وفي عينيّ فجرٌ للأماني</p>
+        </div>
+        <p class="letter-p">ريمي يا أغلى ما شافت عيني مش عارف كيف بدي أوصفلك قديش وجودك بحياتي غير كل إشي قلبي اليوم قرر
+          يحكي بكل صراحة ويقولك إنك النور اللي كنت بستناه من زمان يا عيوني</p>
+        <div class="poem-box">
+          <p>يا من سكنتِ ثنايا الروحِ واغتربت</p>
+          <p>في عينيكِ أحلامي ووجداني</p>
+          <p>أنتِ الجمالُ الذي لا وصفَ يدركهُ</p>
+          <p>وأنتِ الحبُّ في كلّ الأزمانِ</p>
+        </div>
+        <p class="letter-p">ضحكتك يا ريمي هي الدوا لكل تعب وقربك هو الأمان اللي كنت بدور عليه بحبك مش بس عشان رقتك
+          وجمالك بحبك لأنك بتخليني أشوف الدنيا أحلى بكتير طول ما إنتي جنبي يا قمري</p>
+        <div class="poem-box" style="font-size:19px;">
+          <p>سأظلُّ أرعاكِ حباً لا انتهاءَ لهُ</p>
+          <p>مهما تمرُّ بنا في العمرِ أزمانُ</p>
+          <p>هذا عهدُ قلبي.. إني معاكِ</p>
+          <p>في كلِّ خطوةٍ وفي كلِّ مكان 💕</p>
+        </div>
+        <p class="closing">بحبك يا ريمي<br>❤️ من حبيبك وحياتك فيلسوفك ❤️</p>
+        <div style="text-align:center;margin-top:32px;" id="kissWrap">
+          <button class="btn-yes" onclick="kiss()" style="font-size:18px;padding:16px 40px;width:auto;">ابعتيلي بوسة
+            💋</button>
+        </div>
+        <div id="kissRes" style="display:none;" class="kiss-result">
+          💋 وصلت 🥹💕<br><span>قلبي وسع الدنيا دلوقتي.. بقا وين أحطها؟ 😏❤️</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    (function () {
+      const app = document.getElementById('app');
+      const hl = document.getElementById('hl');
+      const syms = ['💕', '❤️', '🌸', '💗', '🌹', '💖', '✨', '🌷'];
+
+      for (let i = 0; i < 20; i++) {
+        const d = document.createElement('div');
+        d.className = 'fh'; d.textContent = syms[i % syms.length];
+        d.style.cssText = `left:${Math.random() * 100}%;font-size:${14 + Math.random() * 16}px;animation-duration:${9 + Math.random() * 13}s;animation-delay:${-Math.random() * 20}s`;
+        hl.appendChild(d);
+      }
+
+      function go(n) {
+        document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+        document.getElementById(n === 'f' ? 'sf' : 's' + n).classList.add('active');
+        if (n === 'f') { burst(); setTimeout(burst, 500); setTimeout(burst, 900); }
+      }
+      window.go = go;
+      window.yes = function (n) { burst(); setTimeout(() => go(n), 350); };
+
+      const msgs = ['مفيش لأ هنا! 😄', 'الزرار بيهرب! 😂', 'اللأ مش موجود 😋', 'قولي أيوه وريحيني 😅', 'مش هتوصليه! 💕', 'القلب مش بيقبل لأ 💖', 'أيوه بس 😄'];
+      const clicks = {};
+
+      window.no = function (btn, bgId) {
+        // الزر يبدأ بالهروب بجنون في كل المراحل
+        clicks[bgId] = (clicks[bgId] || 0) + 1;
+        const n = clicks[bgId];
+
+        const bw = btn.offsetWidth, bh = btn.offsetHeight;
+        const winW = window.innerWidth, winH = window.innerHeight;
+
+        btn.style.position = 'fixed';
+        btn.style.zIndex = '1000';
+        btn.style.width = bw + 'px';
+        btn.style.transition = 'all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275)';
+
+        const yesBtn = document.querySelector('.screen.active .btn-yes');
+        const yRect = yesBtn.getBoundingClientRect();
+        const safeMargin = 120;
+
+        let nx, ny, tries = 0;
+        do {
+          nx = Math.random() * (winW - bw);
+          ny = Math.random() * (winH - bh);
+          tries++;
+          var isTooClose = !(nx + bw + safeMargin < yRect.left || nx - safeMargin > yRect.right || ny + bh + safeMargin < yRect.top || ny - safeMargin > yRect.bottom);
+        } while (isTooClose && tries < 50);
+
+        const rot = (Math.random() - 0.5) * 40;
+        btn.style.left = nx + 'px';
+        btn.style.top = ny + 'px';
+        btn.style.transform = `rotate(${rot}deg)`;
+        btn.style.right = 'auto'; btn.style.bottom = 'auto';
+
+        showToast(bgId, msgs[(n - 1) % msgs.length]);
+        if (n >= 8) { btn.style.opacity = '0'; btn.style.pointerEvents = 'none'; showToast(bgId, 'اختفى الزر! اضغطي نعم بقى 💖'); }
+      };
+
+      function showToast(bgId, msg) {
+        const box = document.getElementById(bgId);
+        let t = box.querySelector('.toast');
+        if (!t) { t = document.createElement('div'); t.className = 'toast'; box.appendChild(t); }
+        t.textContent = msg; t.style.display = 'block';
+        clearTimeout(t._timer);
+        t._timer = setTimeout(() => { t.style.display = 'none'; }, 2200);
+      }
+
+      function burst() {
+        const w = document.createElement('div'); w.className = 'burst-wrap'; app.appendChild(w);
+        for (let i = 0; i < 10; i++) {
+          const h = document.createElement('span'); h.className = 'bh';
+          h.textContent = syms[Math.floor(Math.random() * syms.length)];
+          const ang = (i / 10) * 360, dist = 70 + Math.random() * 60;
+          h.style.setProperty('--dx', Math.cos(ang * Math.PI / 180) * dist + 'px');
+          h.style.setProperty('--dy', Math.sin(ang * Math.PI / 180) * dist + 'px');
+          h.style.animationDelay = Math.random() * .2 + 's';
+          w.appendChild(h);
+        }
+        setTimeout(() => w.remove(), 1100);
+      }
+
+      window.kiss = function () {
+        document.getElementById('kissWrap').style.display = 'none';
+        document.getElementById('kissRes').style.display = 'block';
+
+        // مصفوفة القبلات المتطايرة
+        for (let i = 0; i < 8; i++) {
+          setTimeout(() => {
+            const k = document.createElement('div'); k.className = 'kiss-float'; k.textContent = '💋';
+            k.style.left = (15 + Math.random() * 70) + '%'; k.style.top = (20 + Math.random() * 50) + '%';
+            app.appendChild(k); setTimeout(() => k.remove(), 1500);
+          }, i * 160);
+        }
+        burst(); setTimeout(burst, 500);
+
+        // تجهيز رابط الواتساب برقمك ورسالة ريمي
+        const phoneNumber = "201145800825";
+        const message = encodeURIComponent("مووواه حبيبي احبك كثير 💋❤️💋");
+        const waUrl = `https://wa.me/${phoneNumber}?text=${message}`;
+
+        // فتح الواتساب بعد ثانيتين من الأنميشن
+        setTimeout(() => {
+          window.open(waUrl, '_blank');
+        }, 2500);
+      };
+    })();
+  </script>
+
+</body>
+
+</html>
